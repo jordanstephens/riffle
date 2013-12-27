@@ -6,13 +6,13 @@ module Riffle
 
       return self if args.empty?
 
-      opts = args.pop if args.length > 1 && args.last.is_a?(Hash)
+      opts = get_opts_from_args(args)
+
+      # insert self at front of args list if self is an Array instance
+      args.unshift self if self.is_a?(Array)
 
       min_group_size = (opts && opts[:min_group_size]) || 1
       max_group_size = (opts && opts[:max_group_size]) || 3
-
-      # insert self at front of args list
-      args.unshift self
 
       unless args.select { |a| !a.is_a? Array }.empty?
         raise ArgumentError, "All arguments must be of type `Array`"
@@ -32,6 +32,16 @@ module Riffle
       end
 
       result
+    end
+
+    private
+
+    def get_opts_from_args(args)
+      args.pop if opts_passed?(args)
+    end
+
+    def opts_passed?(args)
+      args.length > 1 && args.last.is_a?(Hash)
     end
   end
 end
