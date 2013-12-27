@@ -11,8 +11,7 @@ module Riffle
       # insert self at front of args list if self is an Array instance
       args.unshift self if self.is_a?(Array)
 
-      min_group_size = (opts && opts[:min_group_size]) || 1
-      max_group_size = (opts && opts[:max_group_size]) || 3
+      opts[:range] ||= (1..3)
 
       unless args.select { |a| !a.is_a? Array }.empty?
         raise ArgumentError, "All arguments must be of type `Array`"
@@ -20,7 +19,7 @@ module Riffle
 
       until args.flatten.empty?
         args.each_with_index do |arg, i|
-          group_size = rand(min_group_size..max_group_size)
+          group_size = rand(opts[:range])
           if arg.length < group_size
             result.concat arg
             args[i] = []
@@ -37,7 +36,7 @@ module Riffle
     private
 
     def get_opts_from_args(args)
-      args.pop if opts_passed?(args)
+      opts_passed?(args) ? args.pop : {}
     end
 
     def opts_passed?(args)

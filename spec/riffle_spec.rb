@@ -68,7 +68,7 @@ describe Riffle do
   it "supports defining a min and max group size through an opts Hash passed as the last arg" do
     a = [1, 2, 3, 4, 5, 6, 7, 8]
     b = %w(a b c d e f g h)
-    r = a.riffle(b, { min_group_size: 2, max_group_size: 2 })
+    r = a.riffle(b, { range: (2..2) })
     r.slice(0..1).each { |x| x.is_a?(Integer).should be_true }
     r.slice(2..3).each { |x| x.is_a?(String).should be_true }
     r.slice(6..7).each { |x| x.is_a?(String).should be_true }
