@@ -22,9 +22,16 @@ module Riffle
       # insert self at front of args list if self is an Array instance
       args.unshift self if self.is_a?(::Array)
 
+      # Random.new(nil) explodes for some reason...
+      if opts[:seed].nil?
+        prng = Random.new
+      else
+        prng = Random.new(opts[:seed])
+      end
+
       until args.flatten.empty?
         args.each_with_index do |arg, i|
-          group_size = rand(opts[:range])
+          group_size = prng.rand(opts[:range])
           if arg.length < group_size
             result.concat arg
             args[i] = []

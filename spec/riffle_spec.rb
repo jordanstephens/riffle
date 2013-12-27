@@ -69,5 +69,13 @@ describe Riffle do
     r.slice(6..7).each { |x| x.is_a?(String).should be_true }
     r.slice(8..9).each { |x| x.is_a?(Integer).should be_true }
   end
+
+  it "supports passing a custom seed" do
+    a = [1, 2, 3, 4, 5, 6, 7, 8]
+    b = %w(a b c d e f g h)
+    r1 = Array.riffle(a, b, seed: 123)
+    r2 = Array.riffle(a, b, seed: 123)
+    expect(r1).to eql(r2)
+  end
 end
 
