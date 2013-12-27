@@ -1,11 +1,6 @@
 require "spec_helper"
 
 describe Riffle do
-  it "returns self if no args are passed" do
-    a = [1, 2, 3]
-    a.riffle.should == a
-  end
-
   it "requires all arguments to be of type `Array`, except when the last arg is an opts Hash" do
     expect { [].riffle 1 }.to raise_error(ArgumentError)
     expect { [].riffle [1], :foo }.to raise_error(ArgumentError)
