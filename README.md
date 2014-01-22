@@ -1,11 +1,11 @@
 # riffle
 
-Extends `Array` by defining `Array#riffle` to merge multiple arrays as if
+Extends `Array` by defining `Array#riffle` and `Array.riffle` to merge multiple arrays as if
 [riffling a deck of cards](http://en.wikipedia.org/wiki/Shuffling#Riffle).
 
 **Algorithm Description**
 
-`Array#riffle` iterates over argument arrays and selects a random number
+`riffle` iterates over argument arrays and selects a random number
 of items from each to remove from the front (this default subsequence
 length, or *group size* is in `(1..3)`). The removed items are then
 appended to a new array which is returned as the result after all items
