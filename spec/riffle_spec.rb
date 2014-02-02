@@ -38,7 +38,7 @@ describe Riffle do
     result.select { |r| r.is_a? Symbol }.should.eql? symbols
   end
 
-  it "merges all argument arrays while maintaining the order of the original arrays in relation to themselves" do
+  it "merges all argument arrays while maintaining the order of the items in the original arrays" do
     numbers = [1, 2, 3, 4, 5, 6]
     letters = %w(a b c d e f)
     result = Array.riffle(numbers, letters)
@@ -52,6 +52,16 @@ describe Riffle do
     # filtering out strings from the result should be exactly equal to the
     # original `letters` array. particularly the order should be the same
     result.select { |r| r.is_a? String }.should.eql? letters
+  end
+
+  it "merges the arguments in the order in which they are passed" do
+    numbers = [1, 2, 3, 4, 5, 6]
+    letters = %w(a b c d e f)
+    symbols = [:a, :b, :c, :d, :e, :f]
+    result = Array.riffle(numbers, letters, symbols)
+
+    expect(result.index(1) < result.index("a")).to be_true
+    expect(result.index("a") < result.index(:a)).to be_true
   end
 
   it "maintains the first element in the array on which `riffle` was called" do
