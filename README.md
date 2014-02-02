@@ -1,6 +1,6 @@
 # riffle
 
-Extends `Array` by defining `Array#riffle` and `Array.riffle` to merge multiple arrays as if
+Extends `Array` by defining `Array.riffle` to merge multiple arrays as if
 [riffling a deck of cards](http://en.wikipedia.org/wiki/Shuffling#Riffle).
 
 **Algorithm Description**
@@ -22,13 +22,13 @@ array relative to other items originating from the same argument array.
     numbers = [1, 2, 3, 4, 5, 6]
     letters = %w(a b c d e f)
 
-    numbers.riffle(letters) # => [1, 2, "a", "b", 3, 4, "c", 5, 6, "d", "e", "f"]
+    Array.riffle(numbers, letters) # => [1, 2, "a", "b", 3, 4, "c", 5, 6, "d", "e", "f"]
 
 ### Modifying the Possible *Group Size* Range
 You may also pass an options `Hash` as the last argument to define the
 possible range of the randomly determined *group size* at each iteration:
 
-    numbers.riffle(letters, { min_group_size: 2, max_group_size: 8 })
+    Array.riffle(numbers, letters, { range: (2..8) })
 
 **Note on Random Subsequence Lengths**
 
@@ -36,8 +36,8 @@ The resulting subsequence length from any given argument is *random*,
 so it is very likely that consecutive runs will produce
 different results.
 
-    numbers.riffle(letters) # => [1, "a", "b", 2, 3, "c", 4, 5, 6, "d", "e", "f"]
-    numbers.riffle(letters) # => [1, 2, 3, "a", "b", 4, 5, "c", "d", "e", 6, "f"]
+    Array.riffle(numbers, letters) # => [1, "a", "b", 2, 3, "c", 4, 5, 6, "d", "e", "f"]
+    Array.riffle(numbers, letters) # => [1, 2, 3, "a", "b", 4, 5, "c", "d", "e", 6, "f"]
 
 ## Installation
 

@@ -2,25 +2,22 @@
 module Riffle
   module Array
     def riffle(*args)
-      result = []
-
-      # handle empty or insufficient args
-      if self == ::Array && args.length < 2
-        return args.empty? ? [] : args.first
-      elsif self.is_a?(::Array) && args.empty?
-        return self
-      end
-
       opts = get_opts_from_args(args)
-
-      opts[:range] ||= (1..3)
 
       unless args.select { |a| !a.is_a? ::Array }.empty?
         raise ArgumentError, "All arguments must be of type `Array`"
       end
 
-      # insert self at front of args list if self is an Array instance
-      args.unshift self if self.is_a?(::Array)
+      # handle empty or insufficient args
+      if args.empty?
+        return []
+      elsif args.length < 2
+        return args.first
+      end
+
+      result = []
+
+      opts[:range] ||= (1..3)
 
       # Random.new(nil) explodes for some reason...
       if opts[:seed].nil?
