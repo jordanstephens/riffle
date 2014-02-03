@@ -45,11 +45,7 @@ module Riffle
     private
 
     def get_opts_from_args(args)
-      opts_passed?(args) ? args.pop : {}
-    end
-
-    def opts_passed?(args)
-      args.length > 1 && args.last.is_a?(Hash)
+      args.last.is_a?(Hash) ? args.pop : {}
     end
   end
 end
