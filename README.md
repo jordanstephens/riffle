@@ -24,11 +24,19 @@ array relative to other items originating from the same argument array.
 
     Array.riffle(numbers, letters) # => [1, 2, "a", "b", 3, 4, "c", 5, 6, "d", "e", "f"]
 
-### Modifying the Possible *Group Size* Range
-You may also pass an options `Hash` as the last argument to define the
-possible range of the randomly determined *group size* at each iteration:
+### Modifying the *Range*
+
+You may pass an options `Hash` as the last argument to define the
+possible *range* of the randomly determined group size at each iteration:
 
     Array.riffle(numbers, letters, { range: (2..8) })
+
+You may also pass a list of ranges to define a range for each individual source. Each source `Array` will be paired with a corresponding `Range` at the same index. For example:
+
+    range_list = [(1..1), (2..2)]
+    result = Array.riffle(numbers, letters, { ranges: range_list })
+
+    result # => [1, "a", "b", 2, "c", "d", 3, "e", "f", 4, 5, 6]
 
 **Note on Random Subsequence Lengths**
 
