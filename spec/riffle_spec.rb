@@ -87,5 +87,36 @@ describe Riffle do
     r2 = Array.riffle(a, b, seed: 123)
     expect(r1).to eql(r2)
   end
+
+  it "supports passing a range for each source" do
+    numbers = [1, 2, 3, 4, 5, 6]
+    letters = %w(a b c d e f)
+    symbols = [:a, :b, :c, :d, :e, :f]
+
+    ranges = [(1..1), (2..2), (3..3)]
+    result = Array.riffle(numbers, letters, symbols, { ranges: ranges })
+    expect(result[0]).to eql(1)
+    expect(result[1]).to eql("a")
+    expect(result[2]).to eql("b")
+    expect(result[3]).to eql(:a)
+    expect(result[4]).to eql(:b)
+    expect(result[5]).to eql(:c)
+    expect(result[6]).to eql(2)
+    expect(result[7]).to eql("c")
+    expect(result[8]).to eql("d")
+    expect(result[9]).to eql(:d)
+    expect(result[10]).to eql(:e)
+    expect(result[11]).to eql(:f)
+  end
+
+  it "raises an exception when not all items in ranges list are or type `Range`" do
+    opts = { ranges: [(1..2), :foo] }
+    expect { Array.riffle [1], [2], opts }.to raise_error(ArgumentError)
+  end
+
+  it "raises an exception when length of ranges list does not match length of sources list" do
+    opts = { ranges: [(1..2)] }
+    expect { Array.riffle [1], [2], opts }.to raise_error(ArgumentError)
+  end
 end
 
