@@ -6,11 +6,13 @@ Extends `Array` by defining `Array.riffle` to merge multiple arrays as if
 **Algorithm Description**
 
 `riffle` iterates over argument arrays and selects a random number
-of items from each to remove from the front (this default subsequence
-length, or *group size* is in `(1..3)`). The removed items are then
-appended to a new array which is returned as the result after all items
-from each argument array have been merged. This iteration continues
-until all argument arrays are empty and all items have been merged.
+of items from each to remove from the front. The range in which this
+random number is generated is called the *range* and by default is
+in `(1..3)`. However, this can be configured for all sources or for
+each source individually. The removed items are then appended to a
+new array which is returned as the result after all items from each
+argument array have been merged. This iteration continues until all
+argument arrays are empty and all items have been merged.
 
 The order of items in each argument array is preserved in the resulting
 array relative to other items originating from the same argument array.
@@ -31,7 +33,10 @@ possible *range* of the randomly determined group size at each iteration:
 
     Array.riffle(numbers, letters, { range: (2..8) })
 
-You may also pass a list of ranges to define a range for each individual source. Each source `Array` will be paired with a corresponding `Range` at the same index. For example:
+You may also pass a list of ranges to define a range for each individual
+source. Each source `Array` will be paired with a corresponding `Range`
+at the same index. For example:
+
 
     range_list = [(1..1), (2..2)]
     result = Array.riffle(numbers, letters, { ranges: range_list })
