@@ -1,5 +1,7 @@
 # riffle
 
+[![Build Status](https://travis-ci.org/jordanstephens/riffle.svg?branch=master)](https://travis-ci.org/jordanstephens/riffle)
+
 Extends `Array` by defining `Array#riffle` and `Array.riffle` to merge multiple arrays as if
 [riffling a deck of cards](http://en.wikipedia.org/wiki/Shuffling#Riffle).
 
