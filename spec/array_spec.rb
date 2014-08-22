@@ -3,27 +3,27 @@ require "spec_helper"
 describe Array do
   context "#riffle" do
     it "defines Array#riffle" do
-      [].respond_to?(:riffle).should be_true
+      expect([]).to respond_to(:riffle)
     end
 
     it "returns self if no args are passed" do
       a = [1, 2, 3]
-      a.riffle.should == a
+      expect(a.riffle).to eql(a)
     end
   end
 
   context ".riffle" do
     it "defines Array.riffle" do
-      Array.respond_to?(:riffle).should be_true
+      expect(Array).to respond_to(:riffle)
     end
 
     it "returns [] if no args are passed" do
-      Array.riffle.should == []
+      expect(Array.riffle).to eql([])
     end
 
     it "returns the arg if only one arg is passed" do
       a = [1,2,3]
-      Array.riffle(a).should == a
+      expect(Array.riffle(a)).to eql(a)
     end
   end
 end

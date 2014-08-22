@@ -12,7 +12,7 @@ describe Riffle do
 
   it "does not raise exceptions when empty args are passed" do
     expect { [].riffle [], [] }.to_not raise_error
-    [].riffle([], []).should be_empty
+    expect([].riffle [], []).to be_empty
   end
 
   it "supports more than two arguments" do
@@ -21,21 +21,26 @@ describe Riffle do
     symbols = [:foo, :bar, :baz, :qux]
     result = numbers.riffle letters, symbols
 
-    result.length.should == numbers.length +
-                            letters.length +
-                            symbols.length
+    total_length = numbers.length +
+                   letters.length +
+                   symbols.length
+
+    expect(result.length).to be(total_length)
 
     # filtering out integers from the result should be exactly equal to the
     # original `numbers` array. particularly the order should be the same
-    result.select { |r| r.is_a? Integer }.should.eql? numbers
+    result_numbers = result.select { |r| r.is_a? Integer }
+    expect(result_numbers).to eql(numbers)
 
     # filtering out strings from the result should be exactly equal to the
     # original `letters` array. particularly the order should be the same
-    result.select { |r| r.is_a? String }.should.eql? letters
+    result_letters = result.select { |r| r.is_a? String }
+    expect(result_letters).to eql(letters)
 
     # filtering out strings from the result should be exactly equal to the
     # original `letters` array. particularly the order should be the same
-    result.select { |r| r.is_a? Symbol }.should.eql? symbols
+    result_symbols = result.select { |r| r.is_a? Symbol }
+    expect(result_symbols).to eql(symbols)
   end
 
   it "merges all argument arrays while maintaining the order of the original arrays in relation to themselves" do
@@ -43,31 +48,35 @@ describe Riffle do
     letters = %w(a b c d e f)
     result = numbers.riffle letters
 
-    result.length.should == numbers.length + letters.length
+    total_length = numbers.length + letters.length
+    expect(result.length).to eql(total_length)
 
     # filtering out integers from the result should be exactly equal to the
     # original `numbers` array. particularly the order should be the same
-    result.select { |r| r.is_a? Integer }.should.eql? numbers
+    result_numbers = result.select { |r| r.is_a? Integer }
+    expect(result_numbers).to eql(numbers)
 
     # filtering out strings from the result should be exactly equal to the
     # original `letters` array. particularly the order should be the same
-    result.select { |r| r.is_a? String }.should.eql? letters
+    result_letters = result.select { |r| r.is_a? String }
+    expect(result_letters).to eql(letters)
   end
 
   it "maintains the first element in the array on which `riffle` was called" do
     a = [1, 2, 3]
     b = %w(a b c)
-    a.riffle(b).first.should == a.first
+    r = a.riffle(b)
+    expect(r.first).to be(a.first)
   end
 
   it "supports defining a min and max group size through an opts Hash passed as the last arg" do
     a = [1, 2, 3, 4, 5, 6, 7, 8]
     b = %w(a b c d e f g h)
     r = a.riffle(b, { range: (2..2) })
-    r.slice(0..1).each { |x| x.is_a?(Integer).should be_true }
-    r.slice(2..3).each { |x| x.is_a?(String).should be_true }
-    r.slice(6..7).each { |x| x.is_a?(String).should be_true }
-    r.slice(8..9).each { |x| x.is_a?(Integer).should be_true }
+    r.slice(0..1).each { |x| expect(x).to be_a(Integer) }
+    r.slice(2..3).each { |x| expect(x).to be_a(String) }
+    r.slice(6..7).each { |x| expect(x).to be_a(String) }
+    r.slice(8..9).each { |x| expect(x).to be_a(Integer) }
   end
 
   it "supports passing a custom seed" do
